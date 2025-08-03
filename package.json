@@ -1,0 +1,17 @@
+{
+  "name": "satit-udomseuksa-equipment-booking",
+  "version": "2.1.0",
+  "description": "ระบบการจอง ยืม - คืนครุภัณฑ์โรงเรียน V.2.1",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git"
+  },
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "live-server . --port=3000 --open=index.html"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
