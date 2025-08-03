@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- ADD BABEL FOR IN-BROWSER JSX/TSX TRANSPILATION -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     html, body, * {
       font-family: 'Sarabun', sans-serif !important;
@@ -28,23 +25,56 @@
       animation: pulse-dots 1.4s infinite ease-in-out both;
     }
   </style>
+
+  <!-- 1. Load SystemJS and the Babel plugin -->
+  <script src="https://unpkg.com/systemjs@6.15.1/dist/s.min.js"></script>
+  <script src="https://unpkg.com/systemjs@6.15.1/dist/plugins/babel.min.js"></script>
+
+  <!-- 2. Configure SystemJS -->
+  <script type="systemjs-importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@19.1.0",
+      "react-dom/client": "https://esm.sh/react-dom@19.1.0/client",
+      "react-router-dom": "https://esm.sh/react-router-dom@6.25.1",
+      "xlsx": "https://esm.sh/xlsx@0.18.5"
+    }
+  }
+  </script>
+  <script>
+    // Configure SystemJS to use the Babel plugin for our code
+    System.set('plugin-babel', System.get('https://unpkg.com/systemjs@6.15.1/dist/plugins/babel.min.js'));
+    System.addImportMap(System.get('systemjs-importmap'));
+    System.transpiler = 'plugin-babel';
+
+    // Configure babel options
+    System.babelOptions({
+      react: {
+        runtime: 'automatic' // Use new JSX transform
+      },
+      typescript: true
+    });
+    
+    // Tell SystemJS how to handle our file types
+    System.meta['*.tsx'] = { loader: 'plugin-babel' };
+    System.meta['*.ts'] = { loader: 'plugin-babel' };
+  </script>
 <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.1.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
-    "react/": "https://esm.sh/react@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
     "xlsx": "https://esm.sh/xlsx@^0.18.5",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.7.0"
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.7.1"
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
 <body class="bg-[#e6f0fa]">
   <div id="root"></div>
-  <!-- ADD APP ENTRY POINT SCRIPT TAG -->
-  <script type="text/babel" data-type="module" src="./index.tsx"></script>
-<script type="module" src="/index.tsx"></script>
+
+  <!-- 3. Start the application using SystemJS -->
+  <script type="systemjs-module" src="./index.tsx"></script>
 </body>
 </html>
